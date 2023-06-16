@@ -1,0 +1,28 @@
+<p>common-type works!</p>
+
+<div *ngIf="roles.length>0;then list; else nolist">
+</div>
+jskdfahkj
+<ng-template #list>
+    <table>
+        {{roles.length}}
+        <tr *ngFor="let role of roles">
+            sdnkfds
+            <td> {{ role.value }} </td>
+            <td> {{ role.type}} </td>
+            
+        </tr>
+    </table>
+    <!-- <table>
+        <tr *ngFor="let department of departments ">
+            <td>{{department.value}}</td>
+            <td>{{department.type}}</td>
+        </tr>
+    </table> -->
+</ng-template>
+<ng-template #nolist>
+    <h1> There are no records </h1>
+</ng-template> 
+
+<!-- 
+ <button type="button" (click)="GetRoleByid()"> GetProductById </button> -->

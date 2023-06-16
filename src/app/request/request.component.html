@@ -1,0 +1,152 @@
+<div class="Container">
+
+    <form [formGroup]="transportForm" (ngSubmit)="Submit(transportForm)" class="transport-form">
+        <!-- For EmployeeId -->
+        <div class="mb-3 row">
+            <label for="staticId" class="col-sm-2 col-form-label">Employee</label>
+            <div class="col-sm-10">
+              <input type="text" readonly class="form-control-plaintext" id="staticId" value="111">
+            </div>
+          </div>
+
+        <!-- <div class="form-group row">
+            <label for="employeeId">Employee Id</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="employeeId" >
+            </div>
+        </div> -->
+        <!--Employee Name-->
+        <div class="row">
+            <label for="employeeName">Employee Name</label>
+            <div class="col">
+                <input type="text" id="firstName" class="form-control" placeholder="First name">
+            </div>
+            <div class="col">
+                <input type="text" id="middleName" class="form-control" placeholder="Middle name">
+            </div>
+            <div class="col">
+                <input type="text" id="lastName" class="form-control" placeholder="Last name">
+            </div>
+        </div>
+        <!--Project Name-->
+
+        <div class="dropdown">
+            <label for="projectField">Project </label>
+            <select name="projectField" id="projectField" (click)="onProjectChange()"  [(ngModel)]="projectField">
+                <option value="">Select project</option>
+                <option class="dropdown-item" *ngFor="let pro of Project" value="project">{{pro.type}}</option>
+            </select>
+        </div>
+
+        
+
+
+            <!--Department Name-->
+            <div class="dropdown">
+                <label for="departmentField">Department</label>
+                <select name="departmentField" id="departmentField" (click)="onDepartmentChange()"  [(ngModel)]="departmentField">
+                    <option value="">Select</option>
+                    <option class="dropdown-item" *ngFor="let department of Department" value="department">{{department.type}}</option>
+                </select>
+            </div>
+
+        <!-- checkbox of Flight Required  -->
+        <input type="checkbox" id="checkFlight" (click)="checkTransportDetails()" [(ngModel)]="checkFlight"
+            [ngModelOptions]="{standalone: true}">
+        <label for="checkFlight">FilghtRequired</label>
+
+        <!--Flight type Dropdown-->
+        <div class="dropdown" *ngIf="checkFlight">
+            <label for="travelMode" >Choose your flight type: </label>
+            <select name="travelMode" id="travelMode" (change)="onTravelTypeChange(mySelect.value)" #mySelect>
+                <option value="">Select</option>
+                <option class="dropdown-item"  *ngFor="let flights of Flight" [value]="flights.id">{{flights.type}}</option>
+            </select>
+        </div>
+
+        <!--If international is selected-->
+        <div class="form-group" *ngIf="isInternationalTravel">
+            <label for="passportNumber">Passport number</label>
+            <input type="text" id="passportNumber" formControlName="passportNumber" required>
+
+            <!-- Upload passport -->
+            <div class="form-group">
+                <label for="passportFile">Upload Passport File</label>
+                <input formControlName="passportFile" id="passportFile" type="file" class="form-control" (change)="onFileChange($event)">
+              </div>
+            <!-- Upload visa -->
+              <div class="form-group">
+                <label for="visaFile">Upload Visa File</label>
+                <input formControlName="visaFile" id="visaFile" type="file" class="form-control" (change)="onFileChange($event)">
+              </div>
+              </div>
+  <!--for both international && domestic -->
+
+  <div class="form-group" *ngIf="isInternationalTravel || isDomesticTravel">
+            <label for="aadharNumber">Aadhar card number</label>
+            <input type="text" id="aadharNumber" formControlName="aadharNumber" required>
+            <!-- Upload Aadhar -->
+            
+                <label for="aadharFile">Upload Aadhar card photo</label>
+                <input formControlName="aadharFile" id="aadharFile" type="file" class="form-control" (change)="onFileChange($event)">
+
+            <!--City drop down-->
+            <div class="dropdown">
+                <label for="cityField">City </label>
+                <select name="cityField" id="cityField" (change)="onCityChange($event)" [(ngModel)]="cityField">
+                    <option value="">Select city</option>
+                    <option class="dropdown-item" *ngFor="let cities of City" value="flight">{{cities.type}}</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+            <label for="travelDateFrom">Travel date from</label>
+            <input type="date" id="travelDateFrom" formControlName="travelDateFrom" >
+          </div>
+          <div class="form-group">
+            <label for="travelDateTill">Travel date till</label>
+            <input type="date" id="travelDateTill" formControlName="travelDateTill" >
+            </div>
+        </div>
+
+        <!-- checkbox of Hotel Required  -->
+        <br>
+        <input type="checkbox" id="checkHotel" (click)="checkHotelMeal()" [(ngModel)]="checkHotel" [ngModelOptions]="{standalone: true}">
+        <label for="checkHotel">Hotel Required</label>
+
+        <!--Meal Preference-->
+        <div *ngIf="checkHotel">
+            <div class="dropdown">
+                <label for="mealVegNonVeg">Choose your meal preference: </label>
+                <select name="mealVegNonVeg" id="mealVegNonVeg">
+                    <option value="">Select</option>
+                    <option class="dropdown-item" *ngFor="let mealPreferences of MealPreference">
+                        {{mealPreferences.type}}</option>
+                </select>
+            </div>
+            <!--Meal Type-->
+            <div class="dropdown">
+                <label for="mealType">Choose your meal </label>
+                <select name="mealType" id="mealType">
+                    <option value="">Select</option>
+                    <option class="dropdown-item" *ngFor="let mealTypes of MealType">{{mealTypes.type}}
+                    </option>
+                </select>
+            </div>
+
+            <!--Staying date -->
+            <div class="form-group">
+                <label for="stayingDate">Staying date</label>
+                <input type="date" id="stayingDate" required>
+            </div>
+            <!--Staying days-->
+            <div class="form-group">
+                <label for="stayingDays">Staying days</label>
+                <input type="number" id="stayingDays"  required>
+            </div>
+        </div>
+        <div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+          </div>
+    </form>
+</div>
